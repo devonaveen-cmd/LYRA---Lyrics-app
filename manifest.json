@@ -1,7 +1,7 @@
 {
-  "name": "Lyra - Notes",
-  "short_name": "Lyra - Notes",
-  "description": "Lyrics app",
+  "name": "Lyra - Lyrics",
+  "short_name": "Lyra",
+  "description": "A simple lyrics and song notes app",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
