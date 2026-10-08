@@ -660,6 +660,66 @@ body.kb-open #tabbar{transform:translate(-50%,150%);opacity:0}
 
 <div class="deco" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
 
+/* ===== lyra: saturated palette + pastel baby-blue accent =====
+   PASTE THIS RIGHT BEFORE THE  </style>  TAG (end of your CSS).
+   It overrides the tokens above it, so nothing else needs editing. */
+
+/* ---------- night ---------- */
+:root, body[data-theme="dark"]{
+  --accent:#89CFF0;            /* pastel baby blue */
+  --focus:#89CFF0;
+  --accent-2:#B79CFF;
+  --accent-deep:#3E8FB8;
+  --on-accent:#06202F;
+  --glow:rgba(137,207,240,.28);
+
+  --coral:#FF6B5A; --gold:#FFB347; --yellow:#FFD166; --butter:#FFD166;
+  --mint:#5FE0A0; --sage:#5FE0A0; --cyan:#4FC3F7; --blue:#5B9CFF; --skyblue:#5B9CFF;
+  --plum:#B388FF; --violet:#B388FF; --lavender:#B388FF; --pink:#FF7EB6; --peach:#FFB38A;
+
+  --chord-bg:rgba(137,207,240,.16); --chord-ink:#9ADCFA; --chord-line:rgba(137,207,240,.5);
+
+  /* stronger note colour on cards, editor and presentation */
+  --card-tint:30%; --card-tint2:15%;
+  --pv-tint:20%;
+  --line:rgba(242,234,217,.12); --line-2:rgba(242,234,217,.2);
+  --text-secondary:#C2B9A8; --muted:#C2B9A8; --ink-dim:#C2B9A8;
+}
+
+/* ---------- day ---------- */
+body[data-theme="light"]{
+  --accent:#6EC1F0;            /* baby blue, a touch deeper so it reads on cream */
+  --focus:#6EC1F0;
+  --accent-2:#9B6BD6;
+  --accent-deep:#2F8FC4;
+  --on-accent:#08263A;
+  --glow:rgba(110,193,240,.38);
+
+  --coral:#D63A2F; --gold:#F2B01E; --yellow:#F2B01E; --butter:#F2B01E;
+  --mint:#12B5A6; --sage:#12B5A6; --cyan:#4FA3E0; --blue:#4FA3E0; --skyblue:#4FA3E0;
+  --plum:#9B6BD6; --violet:#9B6BD6; --lavender:#9B6BD6; --pink:#E65FA8; --peach:#F08A5D;
+
+  --chord-bg:rgba(110,193,240,.2); --chord-ink:#1B6F9E; --chord-line:rgba(70,160,215,.55);
+
+  --card-tint:55%; --card-tint2:28%;
+  --pv-tint:100%;
+  --text-secondary:#6E5C45; --muted:#6E5C45; --ink-dim:#6E5C45;
+}
+
+/* gradients that were hard-wired to coral → gold */
+.tnew{background:var(--accent);color:var(--on-accent)}
+.chordtoggle input:checked + .switch{background:var(--accent);box-shadow:0 0 14px -3px var(--glow)}
+.chordtoggle input:checked + .switch::after{background:var(--on-accent)}
+
+/* tab-bar underline dots → one accent */
+.tbtn[data-tb="home"].on::after,
+.tbtn[data-tb="gallery"].on::after,
+.tbtn[data-tb="orbit"].on::after,
+.tbtn[data-tb="search"].on::after{background:var(--accent);box-shadow:0 0 10px var(--accent)}
+
+/* orbit sun glow shifted toward the new accent */
+#orbit .sun::before{background:radial-gradient(circle, rgba(137,207,240,.22), rgba(137,207,240,.06) 45%, transparent 68%)}
+
 <header class="top">
   <div class="logo">
     <span class="word">lyra</span><span class="spark">✶</span>
