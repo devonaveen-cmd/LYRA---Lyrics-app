@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <link rel="manifest" href="./manifest.json">
-<meta name="theme-color" content="#000000">
+<link rel="manifest" href="./manifest.json">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content">
 <meta name="theme-color" content="#050507">
@@ -654,15 +653,10 @@ body.kb-open #tabbar{transform:translate(-50%,150%);opacity:0}
   .deco{display:none}
 }
 
-</style>
-</head>
-<body>
-
-<div class="deco" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-
-/* ===== lyra: saturated palette + pastel baby-blue accent =====
-   PASTE THIS RIGHT BEFORE THE  </style>  TAG (end of your CSS).
-   It overrides the tokens above it, so nothing else needs editing. */
+/* ================================================================
+   lyra: saturated palette + pastel baby-blue accent
+   (kept last so it overrides the tokens above)
+================================================================ */
 
 /* ---------- night ---------- */
 :root, body[data-theme="dark"]{
@@ -719,6 +713,11 @@ body[data-theme="light"]{
 
 /* orbit sun glow shifted toward the new accent */
 #orbit .sun::before{background:radial-gradient(circle, rgba(137,207,240,.22), rgba(137,207,240,.06) 45%, transparent 68%)}
+</style>
+</head>
+<body>
+
+<div class="deco" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
 
 <header class="top">
   <div class="logo">
@@ -2232,11 +2231,12 @@ function openOrbit(){
     }
   };
   ov.onpointerup = () => { dragX = null; targetSlow = 1; };
-  ov.addEventListener('click', e => {
+  /* assigned (not added) so reopening orbit never stacks listeners */
+  ov.onclick = e => {
     if(selected && (e.target === ov)){                 /* empty space — let it drift again */
       selected.el.classList.remove('sel'); selected.ringglow(false); selected = null;
     }
-  });
+  };
   $('#orbit .hint').textContent = touchy
     ? 'tap a planet to hold it · tap again to open · drag to spin'
     : 'hover to slow the spin · click a planet to open it · o / esc to return';
@@ -2327,7 +2327,6 @@ document.addEventListener('keydown', e => {
     if(e.key === 'ArrowLeft'){ presentNav(-1); e.preventDefault(); }
     return;
   }
-  if(typing) return;
   switch(e.key){
     case 'n': case 'N': if(!anyOverlayOpen().length){ newNote(); e.preventDefault(); } break;
     case 'g': case 'G': if(!anyOverlayOpen().length){ openGallery(); e.preventDefault(); } break;
@@ -2371,7 +2370,6 @@ $('#btn-haptic').addEventListener('click', () => {
 });
 AK.enabled = localStorage.getItem('lyra.sound') !== '0';
 Hap.enabled = localStorage.getItem('lyra.haptic') !== '0';
-refreshToggles();
 
 /* unlock audio on first gesture (mobile safari) */
 document.addEventListener('pointerdown', function unlock(){ AK.ensure(); document.removeEventListener('pointerdown', unlock); });
@@ -2544,6 +2542,7 @@ function syncMoreLabels(){
   if(s) s.textContent = AK.enabled ? 'on' : 'off';
   if(h) h.textContent = Hap.enabled ? 'on' : 'off';
 }
+refreshToggles();
 $('#btn-more').addEventListener('click', () => { syncMoreLabels(); $('#more').classList.remove('hidden'); AK.chime(); });
 $$('#more [data-more]').forEach(b => b.addEventListener('click', () => {
   const k = b.dataset.more;
@@ -2579,8 +2578,6 @@ $$('#more [data-close]').forEach(el => el.addEventListener('click', () => $('#mo
     presentNav(x < 0.32 ? -1 : 1);
   });
 })();
-
-/* device-appropriate hints */
 
 /* hand-letter: wrap each letter in its own colour + tilt */
 function doodleize(el, pastel){
