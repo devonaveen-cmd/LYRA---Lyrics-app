@@ -11,7 +11,7 @@
 <title>lyra</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Cormorant+Upright:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Cormorant+Upright:wght@500;600;700&family=Space+Mono:wght@400;700&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 /* ================================================================
    lyra v16 — "candy cosmos"
@@ -43,6 +43,7 @@
   --note-ink:#F7F3EB; --note-sub:#D4CBB8; --note-dim:#A2988A;
   --note-line:rgba(242,234,217,.11); --note-border:rgba(242,234,217,.13);
   --note-paper:#131110; --note-ph:rgba(242,234,217,.4); --note-chipbg:rgba(242,234,217,.09);
+  --note-text:#FFFFFF; /* dark mode: note text is white */
   --chord-bg:rgba(239,105,5,.13); --chord-ink:#E8964A; --chord-line:rgba(239,105,5,.42);
   --tape:transparent; --tape-hover:transparent;
   --radius:20px; --radius-sm:12px;
@@ -55,6 +56,7 @@
   --font-mono:'Space Mono',ui-monospace,monospace;
   --font-doodle:'Source Serif 4',Georgia,serif;
   --font-hand:'Cormorant Upright',var(--font-doodle);
+  --font-note:'Poppins',system-ui,sans-serif; /* default note-text face: Poppins */
   --spring:cubic-bezier(.34,1.56,.64,1);
   --ease:cubic-bezier(.22,1,.36,1);
 }
@@ -81,6 +83,7 @@ body[data-theme="light"]{
   --note-ink:#241B12; --note-sub:#6E5C4B; --note-dim:#8C7B65;
   --note-line:rgba(74,58,44,.12); --note-border:rgba(74,58,44,.15);
   --note-paper:#FFF9EC; --note-ph:rgba(74,58,44,.4); --note-chipbg:rgba(74,58,44,.07);
+  --note-text:#000000; /* light mode: note text is black */
   --chord-bg:rgba(49,170,169,.14); --chord-ink:#1F7E7C; --chord-line:rgba(49,170,169,.42);
   --stage-hi:88%; --stage-lo:78%; --stage-base:#F2E9D2;
   --pv-tint:88%; --pv-base:#F5EDD8;
@@ -222,7 +225,7 @@ aside.side{position:sticky;top:16px;width:228px;flex-shrink:0;margin-right:24px;
 .card .vcal .vm{font:700 7.5px var(--font-mono);letter-spacing:.08em;color:color-mix(in srgb,var(--n-ink,var(--note-ink)) 78%,transparent);line-height:1}
 .card .vcal .vd{font:600 13px var(--font-ui);color:var(--n-ink,var(--note-ink));line-height:1.2}
 .card h3{font-family:var(--font-doodle);font-weight:600;font-size:16px;line-height:1.35;color:var(--n-ink,var(--note-ink));margin:4px 0 8px;padding-right:28px;overflow-wrap:anywhere}
-.card .snippet{font-family:var(--font-doodle);font-size:13.5px;line-height:1.55;color:color-mix(in srgb,var(--n-ink,var(--note-ink)) 80%,transparent);max-height:147px;overflow:hidden;
+.card .snippet{font-family:var(--font-note);font-size:13.5px;line-height:1.55;color:var(--note-text);max-height:147px;overflow:hidden;
   -webkit-mask-image:linear-gradient(180deg,#000 86%,transparent);mask-image:linear-gradient(180deg,#000 86%,transparent)}
 .card .snippet .mini-chord, .gcard .gsnippet .mini-chord{display:inline-block;font:400 10.5px var(--font-mono);padding:1.5px 7px;margin:0 6px 2px 0;border-radius:7px;background:color-mix(in srgb,var(--nc) 32%,transparent);color:var(--n-ink,var(--note-ink))}
 .card .cmeta{display:flex;align-items:center;gap:6px;margin-top:13px;min-height:28px;flex-wrap:wrap}
@@ -345,7 +348,7 @@ aside.side{position:sticky;top:16px;width:228px;flex-shrink:0;margin-right:24px;
   border:1px solid color-mix(in srgb,var(--nc,#777777) 42%,transparent);border-radius:26px;box-shadow:var(--shadow-pop);animation:popIn .32s var(--spring)}
 #editor .ed-card::before{content:'';position:absolute;top:0;left:26px;right:26px;height:2.5px;border-radius:3px;background:color-mix(in srgb,var(--nc,#777777) 60%,transparent);opacity:.75;pointer-events:none}
 .ed-top{display:flex;align-items:center;gap:6px;padding:16px 16px 4px 20px}
-#ed-title{flex:1;min-width:0;background:none;border:none;outline:none;font-family:var(--font-doodle);font-weight:600;font-size:clamp(24px,2.6vw,29px);line-height:1.25;color:var(--text);caret-color:var(--accent)}
+#ed-title{flex:1;min-width:0;background:none;border:none;outline:none;font-family:var(--font-doodle);font-weight:600;font-size:clamp(24px,2.6vw,29px);line-height:1.25;color:var(--note-text);caret-color:var(--accent)}
 #ed-title::placeholder{color:var(--note-ph)}
 .ed-toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:3px;padding:12px 18px 6px}
 #ed-size{border:1px solid var(--line-2);border-radius:10px;padding:6px 9px;background:var(--surface-2);font:600 12px var(--font-ui);color:var(--text);outline:none;cursor:pointer}
@@ -377,7 +380,7 @@ aside.side{position:sticky;top:16px;width:228px;flex-shrink:0;margin-right:24px;
 .chordtoggle input:checked + .switch::after{left:18px;background:#17121F}
 .tg-short{display:none}
 .ed-scroll{flex:1;overflow-y:auto;padding:4px 22px 16px}
-#ed-body{font-family:var(--font-doodle);font-size:18px;line-height:1.75;color:var(--text);min-height:300px;outline:none;padding:8px 2px;caret-color:var(--accent);overflow-wrap:anywhere}
+#ed-body{font-family:var(--font-note);font-size:18px;line-height:1.75;color:var(--note-text);min-height:300px;outline:none;padding:8px 2px;caret-color:var(--accent);overflow-wrap:anywhere}
 #ed-body:empty::before{content:'press play… write anything here';color:var(--note-ph);font-family:var(--font-hand);font-size:22px}
 .chord-rows{padding:10px 0 0;display:none}
 .chord-rows.on{display:block}
@@ -391,7 +394,7 @@ aside.side{position:sticky;top:16px;width:228px;flex-shrink:0;margin-right:24px;
 .rowplay{width:34px;height:34px;flex-shrink:0;border-radius:50%;background:var(--surface-3);color:var(--accent);font-size:14px;display:grid;place-items:center;transition:all .22s var(--spring)}
 .rowplay:hover{background:color-mix(in srgb,var(--accent) 16%,transparent);box-shadow:0 0 14px -4px var(--glow);transform:scale(1.08)}
 .rowplay:active{transform:scale(.85)}
-.lyric{min-height:42px;padding:9px 6px 9px 14px;border-left:2px solid var(--line-2);border-radius:0 10px 10px 0;font-family:var(--font-doodle);font-size:17px;line-height:1.55;color:var(--text);outline:none;transition:border-color .25s;overflow-wrap:anywhere}
+.lyric{min-height:42px;padding:9px 6px 9px 14px;border-left:2px solid var(--line-2);border-radius:0 10px 10px 0;font-family:var(--font-note);font-size:17px;line-height:1.55;color:var(--note-text);outline:none;transition:border-color .25s;overflow-wrap:anywhere}
 .lyric:focus{border-left-color:var(--accent)}
 .lyric:empty::before{content:attr(data-ph);color:var(--note-ph);font-family:var(--font-hand)}
 #chord-pal{display:none;flex-wrap:wrap;gap:6px;padding:4px 0 12px}
@@ -415,12 +418,12 @@ aside.side{position:sticky;top:16px;width:228px;flex-shrink:0;margin-right:24px;
 #present .psheet{max-width:880px;margin:0 auto;padding:clamp(44px,9vh,100px) 28px calc(80px + env(safe-area-inset-bottom))}
 #present .p-head{text-align:center;margin-bottom:clamp(22px,4vh,42px)}
 #present .p-title{font-family:var(--font-doodle);font-weight:700;font-size:clamp(30px,4.8vw,46px);line-height:1.2;color:var(--p-ink,var(--note-ink))}
-#present .p-body{font-family:var(--font-doodle);font-size:clamp(17px,2vw,21px);line-height:1.85;color:color-mix(in srgb,var(--p-ink,var(--note-ink)) 86%,transparent);white-space:pre-wrap;overflow-wrap:anywhere}
+#present .p-body{font-family:var(--font-note);font-size:clamp(17px,2vw,21px);line-height:1.85;color:color-mix(in srgb,var(--p-ink,var(--note-ink)) 86%,transparent);white-space:pre-wrap;overflow-wrap:anywhere}
 #present .ptext{white-space:pre-wrap}
 #present .prow{display:grid;grid-template-columns:minmax(110px,150px) 1fr;gap:16px;align-items:baseline;margin-bottom:14px}
 #present .pchord{justify-self:start;font:700 13.5px var(--font-mono);color:var(--p-ink,var(--note-ink));background:color-mix(in srgb,var(--p-ink,var(--note-ink)) 13%,transparent);border:1px solid color-mix(in srgb,var(--p-ink,var(--note-ink)) 32%,transparent);padding:3px 11px;border-radius:9px;cursor:pointer;transition:all .2s}
 #present .pchord:hover{box-shadow:0 0 16px -4px var(--glow);transform:translateY(-1px)}
-#present .plyric{font-family:var(--font-doodle);font-size:clamp(17px,2vw,21px);color:color-mix(in srgb,var(--p-ink,var(--note-ink)) 86%,transparent)}
+#present .plyric{font-family:var(--font-note);font-size:clamp(17px,2vw,21px);color:color-mix(in srgb,var(--p-ink,var(--note-ink)) 86%,transparent)}
 #present .p-chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:clamp(26px,5vh,48px)}
 #present .p-chips .tagchip{border:1px solid color-mix(in srgb,var(--p-ink,var(--note-ink)) 28%,transparent);color:color-mix(in srgb,var(--p-ink,var(--note-ink)) 84%,transparent)}
 #present .pempty{text-align:center;font-family:var(--font-hand);font-size:24px;color:color-mix(in srgb,var(--p-ink,var(--note-ink)) 60%,transparent);padding:60px 0}
@@ -461,7 +464,7 @@ aside.side{position:sticky;top:16px;width:228px;flex-shrink:0;margin-right:24px;
   animation:cardIn .5s var(--ease) backwards}
 .gcard .tape{display:none}
 .gcard h3{font-family:var(--font-doodle);font-weight:600;font-size:clamp(21px,2.6vw,25px);line-height:1.3;color:var(--n-ink,var(--note-ink));margin-bottom:12px;padding-right:26px;overflow-wrap:anywhere}
-.gcard .gsnippet{font-family:var(--font-doodle);font-size:15.5px;line-height:1.65;color:color-mix(in srgb,var(--n-ink,var(--note-ink)) 80%,transparent);max-height:52vh;overflow:hidden;
+.gcard .gsnippet{font-family:var(--font-note);font-size:15.5px;line-height:1.65;color:var(--note-text);max-height:52vh;overflow:hidden;
   -webkit-mask-image:linear-gradient(180deg,#000 88%,transparent);mask-image:linear-gradient(180deg,#000 88%,transparent)}
 .gcard .gmeta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:18px}
 .gcard .gacts{margin-left:auto;display:flex;gap:6px}
@@ -1621,7 +1624,7 @@ function openEditor(id){
   AK.pop(); Hap.buzz(12);
   $('#ed-title').value = n.title || '';
   edBody.innerHTML = n.html || '';
-  edBody.style.fontFamily = "'Source Serif 4', Georgia, serif";
+  edBody.style.fontFamily = "'Poppins', system-ui, sans-serif";
   edBody.style.fontSize = ({2:'14px',3:'18px',4:'21px',5:'24px',6:'28px',7:'32px'})[n.size||'3'] || '18px';
   $('#ed-size').value = n.size || '3';
   $('#ed-chords').checked = !!n.chords;
@@ -1932,7 +1935,7 @@ function renderPresentSheet(){
     const lum = (0.2126*mix[0] + 0.7152*mix[1] + 0.0722*mix[2]) / 255;
     pv.style.setProperty('--p-ink', lum > 0.65 ? '#241B12' : '#F7F3EB');
   })();
-  const fam = "'Source Serif 4', Georgia, serif";
+  const fam = "'Poppins', system-ui, sans-serif";
   const bodyHtml = n.chords
     ? (n.rows.filter(r => (r.l || '').trim() || (r.c || '').trim()).map(r =>
         `<div class="prow">
