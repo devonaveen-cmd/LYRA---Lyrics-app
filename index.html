@@ -11,7 +11,7 @@
 <title>lyra</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Cormorant+Upright:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Cormorant+Upright:wght@500;600;700&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 /* ================================================================
    lyra v16 — "candy cosmos"
@@ -742,6 +742,74 @@ body[data-theme="light"]{
 
 /* orbit sun glow shifted toward the new accent */
 #orbit .sun::before{background:radial-gradient(circle, rgba(137,207,240,.22), rgba(137,207,240,.06) 45%, transparent 68%)}
+
+/* ================================================================
+   v18: Poppins notes + glass editor
+================================================================ */
+:root{--font-note:'Poppins','Inter',system-ui,sans-serif}
+#ed-title,#ed-body,.lyric,#ed-body h2,
+#present .p-title,#present .p-body,#present .plyric,#present .ptext,#present .ptext h2,
+.card h3,.card .snippet,.gcard h3,.gcard .gsnippet,#visits h3{font-family:var(--font-note)}
+#ed-body{line-height:1.7;letter-spacing:-.005em}
+.lyric{line-height:1.6}
+#ed-body h2,#present .ptext h2{font-weight:600;letter-spacing:-.02em}
+#ed-title{font-weight:600;letter-spacing:-.025em;font-size:clamp(26px,3vw,34px)}
+#ed-body:empty::before{font-family:var(--font-note);font-size:15px;font-style:italic;letter-spacing:0}
+.lyric:empty::before{font-family:var(--font-note);font-size:15px}
+
+/* glass tokens */
+#editor{--g-bg:rgba(255,255,255,.07);--g-bg2:rgba(255,255,255,.12);--g-bd:rgba(255,255,255,.14);--g-hi:rgba(255,255,255,.22);--g-sh:rgba(0,0,0,.55)}
+body[data-theme="light"] #editor{--g-bg:rgba(255,255,255,.5);--g-bg2:rgba(255,255,255,.74);--g-bd:rgba(255,255,255,.85);--g-hi:rgba(255,255,255,.95);--g-sh:rgba(61,47,35,.24)}
+
+#editor .backdrop{background:color-mix(in srgb,var(--backdrop) 72%,transparent);backdrop-filter:blur(22px) saturate(1.4);-webkit-backdrop-filter:blur(22px) saturate(1.4)}
+#editor .ed-card{
+  background:
+    linear-gradient(160deg,color-mix(in srgb,var(--nc,#777) 30%,transparent),color-mix(in srgb,var(--nc,#777) 8%,transparent) 60%),
+    color-mix(in srgb,var(--surface) 56%,transparent);
+  -webkit-backdrop-filter:blur(34px) saturate(1.7);backdrop-filter:blur(34px) saturate(1.7);
+  border:1px solid var(--g-bd);
+  box-shadow:0 34px 100px -30px var(--g-sh),inset 0 1px 0 var(--g-hi)}
+#editor .ed-card::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;opacity:.95;
+  background:
+    radial-gradient(55% 38% at 10% -6%,color-mix(in srgb,var(--nc,#777) 62%,transparent),transparent 72%),
+    radial-gradient(46% 34% at 104% 24%,color-mix(in srgb,var(--accent) 28%,transparent),transparent 70%),
+    radial-gradient(62% 40% at 48% 114%,color-mix(in srgb,var(--nc,#777) 38%,transparent),transparent 70%);
+  animation:glowdrift 14s ease-in-out infinite alternate}
+@keyframes glowdrift{to{transform:translate(-3%,2%) scale(1.06)}}
+#editor .ed-card>*{position:relative;z-index:1}
+
+/* header buttons + done */
+.ed-top .iconbtn{background:var(--g-bg);border:1px solid var(--g-bd);border-radius:14px;box-shadow:inset 0 1px 0 var(--g-hi);color:var(--text)}
+.ed-top .iconbtn:hover{background:var(--g-bg2)}
+.ed-top .btn.primary{background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 78%,#fff),var(--accent));box-shadow:0 10px 26px -8px var(--glow),inset 0 1px 0 rgba(255,255,255,.55)}
+
+/* pills + segmented */
+.mpill,.seg{background:var(--g-bg);border:1px solid var(--g-bd);box-shadow:inset 0 1px 0 var(--g-hi);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.mpill:hover{background:var(--g-bg2)}
+.seg button.on{background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 78%,#fff),var(--accent));box-shadow:0 6px 16px -6px var(--glow),inset 0 1px 0 rgba(255,255,255,.55)}
+
+/* writing sheet */
+.ed-scroll{margin:0 16px 14px;padding:14px 22px 22px;border-radius:22px;background:var(--g-bg);border:1px solid var(--g-bd);
+  box-shadow:inset 0 1px 0 var(--g-hi),0 20px 44px -28px var(--g-sh)}
+#ed-body{padding:6px 0}
+
+/* format bar + panel */
+.fmtbar{height:48px;border-radius:20px;background:var(--g-bg);border:1px solid var(--g-bd);
+  box-shadow:inset 0 1px 0 var(--g-hi),0 16px 36px -20px var(--g-sh);-webkit-backdrop-filter:blur(22px) saturate(1.5);backdrop-filter:blur(22px) saturate(1.5)}
+.fb.on{background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 36%,transparent),color-mix(in srgb,var(--accent) 16%,transparent));
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 55%,transparent),0 6px 16px -8px var(--glow)}
+.fb-done{background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 78%,#fff),var(--accent))}
+.fmtpanel{border-radius:20px;background:var(--g-bg2);border:1px solid var(--g-bd);
+  box-shadow:inset 0 1px 0 var(--g-hi),0 22px 44px -24px var(--g-sh);-webkit-backdrop-filter:blur(26px) saturate(1.5);backdrop-filter:blur(26px) saturate(1.5)}
+.csw,.swatch{box-shadow:inset 0 1px 0 rgba(255,255,255,.45),inset 0 0 0 1.5px rgba(255,255,255,.22),0 4px 10px -3px rgba(0,0,0,.45)}
+
+@media (max-width:860px){
+  #editor .ed-card::after{animation:none}
+  .fmtwrap{background:transparent;-webkit-backdrop-filter:none;backdrop-filter:none;border-top:none;padding:6px 10px calc(8px + env(safe-area-inset-bottom))}
+  body.kb-open .fmtwrap{padding-bottom:8px}
+  .fmtbar{height:52px;padding:0 6px;border-radius:22px;background:var(--g-bg);border:1px solid var(--g-bd)}
+  .ed-scroll{margin:0 10px 8px;padding:10px 16px 18px;border-radius:22px}
+}
 </style>
 </head>
 <body>
@@ -1615,7 +1683,7 @@ function renderSecstrip(){
 let editingId = null;
 let savedRange = null;
 const edBody = $('#ed-body');
-const SIZE_PX = {2:'14px',3:'18px',4:'21px',5:'24px',6:'28px',7:'32px'};
+const SIZE_PX = {2:'13px',3:'16px',4:'19px',5:'22px',6:'26px',7:'30px'};
 const FORE = ['#E5484D','#E98A15','#D9A400','#2FA56C','#2F8FE0','#8B63E6','#D9498F'];
 const HI = ['rgba(255,209,102,.42)','rgba(95,224,160,.36)','rgba(110,193,240,.4)','rgba(255,126,182,.36)','rgba(179,136,255,.38)','rgba(255,107,90,.34)'];
 const ALIGN_PATHS = {l:'M4 6h16M4 12h10M4 18h14', c:'M4 6h16M7 12h10M5 18h14', r:'M4 6h16M10 12h10M6 18h14'};
@@ -1663,8 +1731,8 @@ function openEditor(id){
   try{ document.execCommand('defaultParagraphSeparator', false, 'div'); }catch(e){}
   $('#ed-title').value = n.title || '';
   edBody.innerHTML = n.html || '';
-  edBody.style.fontFamily = "'Source Serif 4', Georgia, serif";
-  edBody.style.fontSize = SIZE_PX[n.size || '3'] || '18px';
+  edBody.style.fontFamily = "'Poppins', 'Inter', system-ui, sans-serif";
+  edBody.style.fontSize = SIZE_PX[n.size || '3'] || '16px';
   markSize(n.size || '3');
   $('#ed-chords').checked = !!n.chords;
   $('#ed-card').style.setProperty('--nc', n.color || PAPER);
@@ -1818,7 +1886,7 @@ function setSize(sz){
   if(hasSel){ exec('fontSize', sz); }
   else {
     n.size = String(sz);
-    edBody.style.fontSize = SIZE_PX[sz] || '18px';
+    edBody.style.fontSize = SIZE_PX[sz] || '16px';
     markSize(sz); AK.tick(); Hap.buzz(6); scheduleSave(true);
   }
 }
@@ -2052,7 +2120,7 @@ function renderPresentSheet(){
     const lum = (0.2126*mix[0] + 0.7152*mix[1] + 0.0722*mix[2]) / 255;
     pv.style.setProperty('--p-ink', lum > 0.65 ? '#241B12' : '#F7F3EB');
   })();
-  const fam = "'Source Serif 4', Georgia, serif";
+  const fam = "'Poppins', 'Inter', system-ui, sans-serif";
   const bodyHtml = n.chords
     ? (n.rows.filter(r => (r.l || '').trim() || (r.c || '').trim()).map(r =>
         `<div class="prow">
